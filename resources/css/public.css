@@ -1,0 +1,268 @@
+/* =========================================================
+   PUBLIC WEBSITE
+   KSPM STMIK ADHI GUNA
+   ========================================================= */
+
+/* =========================
+   NAVBAR
+   ========================= */
+
+.public-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid #e2e8f0;
+    backdrop-filter: blur(12px);
+}
+
+.navbar-inner {
+    min-height: 74px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #0f3d2e;
+    font-weight: 700;
+}
+
+.navbar-brand img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.brand-title {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.brand-subtitle {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    list-style: none;
+}
+
+.navbar-menu a {
+    position: relative;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 27px 0;
+    transition: color 0.2s ease;
+}
+
+.navbar-menu a:hover,
+.navbar-menu a.active {
+    color: #0f3d2e;
+}
+
+.navbar-menu a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 19px;
+    height: 2px;
+    background: #d4af37;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-toggle {
+    display: none;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    color: #0f3d2e;
+    cursor: pointer;
+}
+
+/* =========================
+   HERO
+   ========================= */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+        135deg,
+        rgba(15, 61, 46, 0.97),
+        rgba(15, 61, 46, 0.88)
+    );
+    color: #ffffff;
+}
+
+.hero-content {
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-text {
+    max-width: 700px;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 50px;
+    color: #f3d76d;
+    background: rgba(212, 175, 55, 0.08);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.hero-title {
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.08;
+    margin-bottom: 22px;
+}
+
+.hero-title span {
+    color: #d4af37;
+}
+
+.hero-description {
+    max-width: 600px;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+.public-footer {
+    background: #0b2c22;
+    color: #ffffff;
+    padding: 60px 0 25px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 50px;
+}
+
+.footer-title {
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+
+.footer-description {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 14px;
+    max-width: 400px;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 9px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #d4af37;
+}
+
+.footer-bottom {
+    margin-top: 45px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 900px) {
+    .navbar-menu {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 74px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 10px 4%;
+    }
+
+    .navbar-menu.show {
+        display: flex;
+    }
+
+    .navbar-menu a {
+        display: block;
+        padding: 13px 0;
+    }
+
+    .navbar-menu a.active::after {
+        display: none;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+
+    .navbar-actions {
+        display: none;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .hero-content {
+        min-height: 520px;
+    }
+}
