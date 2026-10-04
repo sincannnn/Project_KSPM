@@ -1,3 +1,7 @@
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("KSPM STMIK Adhi Guna - Website aktif");
-});
+
+
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+
+Alpine.start();
