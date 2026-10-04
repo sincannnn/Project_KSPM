@@ -34,3 +34,7 @@ Route::get('/galeri/{slug}', function ($slug) {
         'slug' => $slug
     ]);
 });
+
+Route::get('/chatbot', function () {
+    return view('public.chatbot.index');
+});
