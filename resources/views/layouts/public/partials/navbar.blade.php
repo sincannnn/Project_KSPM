@@ -88,12 +88,10 @@
 
                 <li class="nav-item ms-lg-2">
 
-                    <a href="/login" class="btn btn-success px-4">
 
+                    <a href="{{ route('login') }}" class="btn btn-success px-4">
                         <i class="bi bi-box-arrow-in-right me-1"></i>
-
                         Login
-
                     </a>
 
                 </li>
