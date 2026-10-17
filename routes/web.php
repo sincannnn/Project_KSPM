@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BeritaArtikelController;
 use App\Http\Controllers\Admin\MateriController;
-
+use App\Http\Controllers\Admin\KegiatanController;
 /*
 |--------------------------------------------------------------------------
 | PUBLIC WEBSITE
@@ -119,6 +119,8 @@ Route::prefix('admin')
             ]);
 
         Route::resource('materi', MateriController::class);
+
+         Route::resource('kegiatan', KegiatanController::class);
     });
 /*
 |--------------------------------------------------------------------------

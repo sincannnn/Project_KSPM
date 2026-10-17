@@ -32,7 +32,8 @@
             <span>Materi Edukasi</span>
         </a>
 
-        <a href="#" class="nav-link">
+        <a href="{{ route('admin.kegiatan.index') }}"
+            class="nav-link {{ request()->routeIs('admin.kegiatan.*') ? 'active' : '' }}">
             <i class="bi bi-calendar-event"></i>
             <span>Kegiatan</span>
         </a>

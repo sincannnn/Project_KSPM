@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PesertaKegiatan;
 
 class Kegiatan extends Model
 {
@@ -14,6 +15,7 @@ class Kegiatan extends Model
     protected $fillable = [
         'nama_kegiatan',
         'slug',
+        'kategori',
         'deskripsi',
         'gambar',
         'lokasi',
@@ -28,11 +30,12 @@ class Kegiatan extends Model
         return [
             'tanggal_mulai' => 'datetime',
             'tanggal_selesai' => 'datetime',
+            'kuota' => 'integer',
         ];
     }
 
     public function peserta()
     {
-        return $this->hasMany(PesertaKegiatan::class, 'kegiatan_id');
+        return $this->hasMany(PesertaKegiatan::class);
     }
 }
