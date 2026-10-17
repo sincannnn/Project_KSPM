@@ -1,6 +1,6 @@
 <aside class="admin-sidebar" id="adminSidebar">
 
-    <a href="{{ route('dashboard') }}" class="admin-brand">
+    <a href="{{ route('admin.dashboard') }}" class="admin-brand">
         <img src="{{ asset('images/logo/logo.png') }}" alt="Logo KSPM">
 
         <div>
@@ -13,14 +13,15 @@
 
         <div class="sidebar-label">MENU UTAMA</div>
 
-        <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <i class="bi bi-grid-1x2"></i>
             <span>Dashboard</span>
         </a>
 
         <div class="sidebar-label">KONTEN WEBSITE</div>
 
-        <a href="#" class="nav-link">
+        <a href="{{ url('/admin/berita-artikel') }}"
+            class="nav-link {{ request()->is('admin/berita-artikel*') ? 'active' : '' }}">
             <i class="bi bi-newspaper"></i>
             <span>Berita & Artikel</span>
         </a>

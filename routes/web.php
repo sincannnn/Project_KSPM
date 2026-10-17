@@ -2,90 +2,128 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
-
+use App\Http\Controllers\Admin\BeritaArtikelController;
 
 /*
 |--------------------------------------------------------------------------
 | PUBLIC WEBSITE
 |--------------------------------------------------------------------------
-| Semua halaman di bawah ini dapat diakses oleh pengunjung
-| tanpa harus login.
+| Halaman publik dapat diakses tanpa login.
 |--------------------------------------------------------------------------
 */
 
-// Beranda
 Route::get('/', function () {
     return view('public.beranda.index');
 })->name('home');
 
+/*
+|--------------------------------------------------------------------------
+| BERITA & ARTIKEL PUBLIK
+|--------------------------------------------------------------------------
+*/
 
-// Berita & Artikel
-Route::get('/berita', function () {
-    return view('public.berita.index');
-})->name('berita.index');
+Route::prefix('berita')->name('berita.')->group(function () {
+    Route::get('/', function () {
+        return view('public.berita.index');
+    })->name('index');
 
-Route::get('/berita/{slug}', function ($slug) {
-    return view('public.berita.show', [
-        'slug' => $slug
-    ]);
-})->name('berita.show');
+    Route::get('/{slug}', function (string $slug) {
+        return view('public.berita.show', compact('slug'));
+    })->name('show');
+});
 
+/*
+|--------------------------------------------------------------------------
+| MATERI PUBLIK
+|--------------------------------------------------------------------------
+*/
 
-// Materi
-Route::get('/materi', function () {
-    return view('public.materi.index');
-})->name('materi.index');
+Route::prefix('materi')->name('materi.')->group(function () {
+    Route::get('/', function () {
+        return view('public.materi.index');
+    })->name('index');
 
-Route::get('/materi/{slug}', function ($slug) {
-    return view('public.materi.show', [
-        'slug' => $slug
-    ]);
-})->name('materi.show');
+    Route::get('/{slug}', function (string $slug) {
+        return view('public.materi.show', compact('slug'));
+    })->name('show');
+});
 
+/*
+|--------------------------------------------------------------------------
+| KEGIATAN PUBLIK
+|--------------------------------------------------------------------------
+*/
 
-// Kegiatan
-Route::get('/kegiatan', function () {
-    return view('public.kegiatan.index');
-})->name('kegiatan.index');
+Route::prefix('kegiatan')->name('kegiatan.')->group(function () {
+    Route::get('/', function () {
+        return view('public.kegiatan.index');
+    })->name('index');
 
-Route::get('/kegiatan/{slug}', function ($slug) {
-    return view('public.kegiatan.show', [
-        'slug' => $slug
-    ]);
-})->name('kegiatan.show');
+    Route::get('/{slug}', function (string $slug) {
+        return view('public.kegiatan.show', compact('slug'));
+    })->name('show');
 
-Route::get('/kegiatan/{slug}/daftar', function ($slug) {
-    return view('public.kegiatan.daftar', [
-        'slug' => $slug
-    ]);
-})->name('kegiatan.daftar');
+    Route::get('/{slug}/daftar', function (string $slug) {
+        return view('public.kegiatan.daftar', compact('slug'));
+    })->name('daftar');
+});
 
+/*
+|--------------------------------------------------------------------------
+| GALERI PUBLIK
+|--------------------------------------------------------------------------
+*/
 
-// Galeri
-Route::get('/galeri', function () {
-    return view('public.galeri.index');
-})->name('galeri.index');
+Route::prefix('galeri')->name('galeri.')->group(function () {
+    Route::get('/', function () {
+        return view('public.galeri.index');
+    })->name('index');
 
-Route::get('/galeri/{slug}', function ($slug) {
-    return view('public.galeri.show', [
-        'slug' => $slug
-    ]);
-})->name('galeri.show');
+    Route::get('/{slug}', function (string $slug) {
+        return view('public.galeri.show', compact('slug'));
+    })->name('show');
+});
 
+/*
+|--------------------------------------------------------------------------
+| CHATBOT PUBLIK
+|--------------------------------------------------------------------------
+*/
 
-// Chatbot
 Route::get('/chatbot', function () {
     return view('public.chatbot.index');
 })->name('chatbot.index');
 
 /*
 |--------------------------------------------------------------------------
-| ADMIN DASHBOARD
+| ADMIN PANEL
+|--------------------------------------------------------------------------
+| Hanya pengguna yang lolos middleware admin yang dapat mengaksesnya.
 |--------------------------------------------------------------------------
 */
 
-Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+Route::prefix('admin')
+    ->name('admin.')
     ->middleware('admin')
-    ->name('dashboard');
+    ->group(function () {
+
+        // Dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard');
+
+        // CRUD Berita & Artikel
+        Route::resource('berita-artikel', BeritaArtikelController::class)
+            ->parameters([
+                'berita-artikel' => 'beritaArtikel',
+            ]);
+    });
+
+/*
+|--------------------------------------------------------------------------
+| AUTHENTICATION
+|--------------------------------------------------------------------------
+| Login, logout, dan autentikasi Admin KSPM.
+|--------------------------------------------------------------------------
+*/
 
 require __DIR__.'/auth.php';
