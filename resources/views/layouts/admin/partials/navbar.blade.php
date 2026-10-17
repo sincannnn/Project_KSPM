@@ -38,7 +38,8 @@
             <span>Kegiatan</span>
         </a>
 
-        <a href="#" class="nav-link">
+        <a href="{{ route('admin.galeri.index') }}"
+            class="nav-link {{ request()->routeIs('admin.galeri.*') ? 'active' : '' }}">
             <i class="bi bi-images"></i>
             <span>Galeri</span>
         </a>

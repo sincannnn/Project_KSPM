@@ -5,6 +5,10 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BeritaArtikelController;
 use App\Http\Controllers\Admin\MateriController;
 use App\Http\Controllers\Admin\KegiatanController;
+use App\Http\Controllers\Admin\GaleriController;
+
+
+use App\Http\Controllers\Public\KegiatanController as PublicKegiatanController;
 /*
 |--------------------------------------------------------------------------
 | PUBLIC WEBSITE
@@ -56,18 +60,17 @@ Route::prefix('materi')->name('materi.')->group(function () {
 */
 
 Route::prefix('kegiatan')->name('kegiatan.')->group(function () {
-    Route::get('/', function () {
-        return view('public.kegiatan.index');
-    })->name('index');
-
-    Route::get('/{slug}', function (string $slug) {
-        return view('public.kegiatan.show', compact('slug'));
-    })->name('show');
+    Route::get('/', [PublicKegiatanController::class, 'index'])
+        ->name('index');
 
     Route::get('/{slug}/daftar', function (string $slug) {
         return view('public.kegiatan.daftar', compact('slug'));
     })->name('daftar');
+
+    Route::get('/{slug}', [PublicKegiatanController::class, 'show'])
+        ->name('show');
 });
+
 
 /*
 |--------------------------------------------------------------------------
@@ -118,9 +121,9 @@ Route::prefix('admin')
                 'berita-artikel' => 'beritaArtikel',
             ]);
 
-        Route::resource('materi', MateriController::class);
-
+         Route::resource('materi', MateriController::class);
          Route::resource('kegiatan', KegiatanController::class);
+         Route::resource('galeri', GaleriController::class);
     });
 /*
 |--------------------------------------------------------------------------
