@@ -1,151 +1,74 @@
 @extends('layouts.public.app')
-
 @section('title', 'Materi Investasi | KSPM STMIK Adhi Guna')
-
 
 @section('content')
 
-{{-- =========================================================
-     HEADER
-========================================================= --}}
-
+{{-- HEADER --}}
 <section class="bg-success text-white">
-
     <div class="container py-5">
-
         <div class="row align-items-center">
-
             <div class="col-lg-8">
-
                 <span class="badge bg-warning text-dark px-3 py-2 mb-3">
-
                     <i class="bi bi-book me-1"></i>
-
                     Pusat Edukasi
-
                 </span>
-
 
                 <h1 class="display-5 fw-bold mb-3">
                     Materi Investasi
                 </h1>
 
-
                 <p class="lead text-white-50 mb-0">
-
-                    Pelajari berbagai materi mengenai investasi,
-                    pasar modal, saham, dan literasi keuangan
-                    secara bertahap.
-
+                    Pelajari investasi, saham, pasar modal, dan literasi
+                    keuangan melalui artikel edukasi yang dapat dibaca
+                    langsung di website.
                 </p>
-
             </div>
-
 
             <div class="col-lg-4 text-center d-none d-lg-block">
-
-                <i
-                    class="bi bi-journal-bookmark-fill text-warning"
-                    style="font-size: 130px;"
-                ></i>
-
+                <i class="bi bi-journal-bookmark-fill text-warning" style="font-size: 130px;"></i>
             </div>
-
         </div>
-
     </div>
-
 </section>
 
-
-
-{{-- =========================================================
-     MATERI
-========================================================= --}}
-
+{{-- DAFTAR MATERI --}}
 <section class="py-5 bg-light">
-
     <div class="container">
 
-
-        {{-- SEARCH & FILTER --}}
-
-        <div class="row g-3 mb-5">
+        {{-- PENCARIAN DAN FILTER --}}
+        <form action="{{ route('materi.index') }}" method="GET" class="row g-3 mb-5">
 
             <div class="col-lg-8">
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <i class="bi bi-search"></i>
+                    </span>
 
-                <form>
+                    <input type="text" name="search" class="form-control" placeholder="Cari judul atau isi materi..."
+                        value="{{ request('search') }}">
 
-                    <div class="input-group">
-
-                        <span class="input-group-text bg-white">
-
-                            <i class="bi bi-search"></i>
-
-                        </span>
-
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Cari materi investasi..."
-                        >
-
-
-                        <button
-                            type="submit"
-                            class="btn btn-success"
-                        >
-                            Cari
-                        </button>
-
-                    </div>
-
-                </form>
-
+                    <button type="submit" class="btn btn-success">
+                        Cari
+                    </button>
+                </div>
             </div>
-
 
             <div class="col-lg-4">
+                <select name="kategori" class="form-select" onchange="this.form.submit()">
 
-                <select class="form-select">
+                    <option value="">Semua Kategori</option>
 
-                    <option selected>
-                        Semua Materi
+                    @foreach($kategoriMateri as $kategori)
+                    <option value="{{ $kategori }}" @selected(request('kategori')===$kategori)>
+                        {{ $kategori }}
                     </option>
-
-                    <option>
-                        Dasar Investasi
-                    </option>
-
-                    <option>
-                        Saham
-                    </option>
-
-                    <option>
-                        Pasar Modal
-                    </option>
-
-                    <option>
-                        Investasi Syariah
-                    </option>
-
-                    <option>
-                        Analisis Saham
-                    </option>
-
+                    @endforeach
                 </select>
-
             </div>
-
-        </div>
-
-
+        </form>
 
         {{-- JUDUL --}}
-
         <div class="mb-4">
-
             <span class="text-success fw-semibold">
                 MATERI PEMBELAJARAN
             </span>
@@ -155,496 +78,106 @@
             </h2>
 
             <p class="text-secondary mb-0">
-
+                @if(request('search') || request('kategori'))
+                Hasil materi berdasarkan pencarian dan filter yang dipilih.
+                @else
                 Pilih materi yang ingin kamu pelajari.
-
+                @endif
             </p>
-
         </div>
 
-
-
-        {{-- CARD MATERI --}}
-
+        {{-- KARTU MATERI --}}
         <div class="row g-4">
 
-
-            {{-- MATERI 1 --}}
-
+            @forelse($materi as $item)
             <div class="col-md-6 col-lg-4">
-
                 <div class="card border-0 shadow-sm h-100">
 
-                    <div
-                        class="bg-success bg-opacity-10 text-center p-5"
-                    >
+                    {{-- GAMBAR SAMPUL --}}
+                    @if($item->gambar)
+                    <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="card-img-top"
+                        style="height: 220px; object-fit: cover;" loading="lazy">
+                    @else
+                    <div class="bg-success bg-opacity-10
+                                        text-center d-flex
+                                        align-items-center
+                                        justify-content-center" style="height: 220px;">
 
-                        <i
-                            class="bi bi-graph-up-arrow text-success"
-                            style="font-size: 75px;"
-                        ></i>
-
+                        <i class="bi bi-journal-richtext text-success" style="font-size: 75px;"></i>
                     </div>
+                    @endif
 
+                    <div class="card-body p-4 d-flex flex-column">
 
-                    <div class="card-body p-4">
-
-                        <span class="badge bg-success mb-3">
-                            Dasar Investasi
-                        </span>
-
-
-                        <h5 class="fw-bold">
-                            Pengenalan Investasi
-                        </h5>
-
-
-                        <p class="text-secondary">
-
-                            Memahami pengertian investasi,
-                            tujuan investasi, manfaat, dan risiko
-                            yang perlu diketahui oleh pemula.
-
-                        </p>
-
-
-                        <div class="d-flex align-items-center text-secondary small mb-3">
-
-                            <i class="bi bi-file-earmark-pdf me-2"></i>
-
-                            PDF
-
+                        <div class="mb-3">
+                            <span class="badge bg-success">
+                                {{ $item->kategori ?: 'Materi Investasi' }}
+                            </span>
                         </div>
 
-
-                        <a
-                            href="{{ url('/materi/pengenalan-investasi') }}"
-                            class="btn btn-outline-success w-100"
-                        >
-
-                            Pelajari Materi
-
-                            <i class="bi bi-arrow-right ms-1"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            {{-- MATERI 2 --}}
-
-            <div class="col-md-6 col-lg-4">
-
-                <div class="card border-0 shadow-sm h-100">
-
-                    <div
-                        class="bg-warning bg-opacity-10 text-center p-5"
-                    >
-
-                        <i
-                            class="bi bi-bar-chart-fill text-warning"
-                            style="font-size: 75px;"
-                        ></i>
-
-                    </div>
-
-
-                    <div class="card-body p-4">
-
-                        <span class="badge bg-warning text-dark mb-3">
-                            Saham
-                        </span>
-
-
                         <h5 class="fw-bold">
-                            Mengenal Saham
+                            {{ $item->judul }}
                         </h5>
 
-
                         <p class="text-secondary">
-
-                            Pelajari pengertian saham,
-                            keuntungan, risiko, dan cara kerja
-                            investasi saham.
-
+                            {{ $item->deskripsi
+                                    ?: \Illuminate\Support\Str::limit(
+                                        strip_tags($item->isi ?? ''),
+                                        140
+                                    )
+                                }}
                         </p>
 
+                        <div class="text-secondary small mb-3">
+                            <i class="bi bi-journal-text me-2"></i>
+                            Artikel edukasi
 
-                        <div class="d-flex align-items-center text-secondary small mb-3">
+                            <span class="mx-2">•</span>
 
-                            <i class="bi bi-file-earmark-pdf me-2"></i>
-
-                            PDF
-
+                            <i class="bi bi-calendar3 me-1"></i>
+                            {{ $item->created_at?->format('d M Y') }}
                         </div>
 
-
-                        <a
-                            href="{{ url('/materi/mengenal-saham') }}"
-                            class="btn btn-outline-success w-100"
-                        >
-
+                        <a href="{{ route('materi.show', $item->slug) }}" class="btn btn-outline-success w-100 mt-auto">
                             Pelajari Materi
-
                             <i class="bi bi-arrow-right ms-1"></i>
-
                         </a>
-
                     </div>
-
                 </div>
-
             </div>
 
+            @empty
+            <div class="col-12">
+                <div class="bg-white rounded shadow-sm text-center p-5">
+                    <i class="bi bi-journal-x text-secondary" style="font-size: 55px;"></i>
 
+                    <h4 class="fw-bold mt-3">
+                        Materi Belum Ditemukan
+                    </h4>
 
-            {{-- MATERI 3 --}}
+                    <p class="text-secondary mb-4">
+                        Belum ada materi yang sesuai dengan pencarian
+                        atau kategori yang dipilih.
+                    </p>
 
-            <div class="col-md-6 col-lg-4">
-
-                <div class="card border-0 shadow-sm h-100">
-
-                    <div
-                        class="bg-primary bg-opacity-10 text-center p-5"
-                    >
-
-                        <i
-                            class="bi bi-building text-primary"
-                            style="font-size: 75px;"
-                        ></i>
-
-                    </div>
-
-
-                    <div class="card-body p-4">
-
-                        <span class="badge bg-primary mb-3">
-                            Pasar Modal
-                        </span>
-
-
-                        <h5 class="fw-bold">
-                            Pengenalan Pasar Modal
-                        </h5>
-
-
-                        <p class="text-secondary">
-
-                            Mengenal pasar modal, fungsi,
-                            pelaku pasar, dan instrumen yang
-                            diperdagangkan.
-
-                        </p>
-
-
-                        <div class="d-flex align-items-center text-secondary small mb-3">
-
-                            <i class="bi bi-file-earmark-pdf me-2"></i>
-
-                            PDF
-
-                        </div>
-
-
-                        <a
-                            href="{{ url('/materi/pengenalan-pasar-modal') }}"
-                            class="btn btn-outline-success w-100"
-                        >
-
-                            Pelajari Materi
-
-                            <i class="bi bi-arrow-right ms-1"></i>
-
-                        </a>
-
-                    </div>
-
+                    <a href="{{ route('materi.index') }}" class="btn btn-success">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>
+                        Tampilkan Semua Materi
+                    </a>
                 </div>
-
             </div>
-
-
-
-            {{-- MATERI 4 --}}
-
-            <div class="col-md-6 col-lg-4">
-
-                <div class="card border-0 shadow-sm h-100">
-
-                    <div
-                        class="bg-info bg-opacity-10 text-center p-5"
-                    >
-
-                        <i
-                            class="bi bi-shield-check text-info"
-                            style="font-size: 75px;"
-                        ></i>
-
-                    </div>
-
-
-                    <div class="card-body p-4">
-
-                        <span class="badge bg-info mb-3">
-                            Investasi Syariah
-                        </span>
-
-
-                        <h5 class="fw-bold">
-                            Saham Syariah
-                        </h5>
-
-
-                        <p class="text-secondary">
-
-                            Memahami konsep saham syariah,
-                            prinsip syariah, dan indeks saham
-                            syariah di Indonesia.
-
-                        </p>
-
-
-                        <div class="d-flex align-items-center text-secondary small mb-3">
-
-                            <i class="bi bi-file-earmark-pdf me-2"></i>
-
-                            PDF
-
-                        </div>
-
-
-                        <a
-                            href="{{ url('/materi/saham-syariah') }}"
-                            class="btn btn-outline-success w-100"
-                        >
-
-                            Pelajari Materi
-
-                            <i class="bi bi-arrow-right ms-1"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            {{-- MATERI 5 --}}
-
-            <div class="col-md-6 col-lg-4">
-
-                <div class="card border-0 shadow-sm h-100">
-
-                    <div
-                        class="bg-danger bg-opacity-10 text-center p-5"
-                    >
-
-                        <i
-                            class="bi bi-pie-chart-fill text-danger"
-                            style="font-size: 75px;"
-                        ></i>
-
-                    </div>
-
-
-                    <div class="card-body p-4">
-
-                        <span class="badge bg-danger mb-3">
-                            Analisis
-                        </span>
-
-
-                        <h5 class="fw-bold">
-                            Analisis Fundamental
-                        </h5>
-
-
-                        <p class="text-secondary">
-
-                            Pengenalan analisis fundamental
-                            untuk membantu memahami kondisi
-                            perusahaan.
-
-                        </p>
-
-
-                        <div class="d-flex align-items-center text-secondary small mb-3">
-
-                            <i class="bi bi-file-earmark-pdf me-2"></i>
-
-                            PDF
-
-                        </div>
-
-
-                        <a
-                            href="{{ url('/materi/analisis-fundamental') }}"
-                            class="btn btn-outline-success w-100"
-                        >
-
-                            Pelajari Materi
-
-                            <i class="bi bi-arrow-right ms-1"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            {{-- MATERI 6 --}}
-
-            <div class="col-md-6 col-lg-4">
-
-                <div class="card border-0 shadow-sm h-100">
-
-                    <div
-                        class="bg-secondary bg-opacity-10 text-center p-5"
-                    >
-
-                        <i
-                            class="bi bi-bar-chart-line text-secondary"
-                            style="font-size: 75px;"
-                        ></i>
-
-                    </div>
-
-
-                    <div class="card-body p-4">
-
-                        <span class="badge bg-secondary mb-3">
-                            Analisis
-                        </span>
-
-
-                        <h5 class="fw-bold">
-                            Analisis Teknikal
-                        </h5>
-
-
-                        <p class="text-secondary">
-
-                            Mengenal dasar analisis teknikal,
-                            grafik harga, tren, dan indikator
-                            dalam perdagangan saham.
-
-                        </p>
-
-
-                        <div class="d-flex align-items-center text-secondary small mb-3">
-
-                            <i class="bi bi-file-earmark-pdf me-2"></i>
-
-                            PDF
-
-                        </div>
-
-
-                        <a
-                            href="{{ url('/materi/analisis-teknikal') }}"
-                            class="btn btn-outline-success w-100"
-                        >
-
-                            Pelajari Materi
-
-                            <i class="bi bi-arrow-right ms-1"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
+            @endforelse
 
         </div>
-
-
 
         {{-- PAGINATION --}}
-
+        @if($materi->hasPages())
         <div class="d-flex justify-content-center mt-5">
-
-            <nav>
-
-                <ul class="pagination">
-
-                    <li class="page-item disabled">
-
-                        <a class="page-link">
-                            Sebelumnya
-                        </a>
-
-                    </li>
-
-
-                    <li class="page-item active">
-
-                        <a
-                            class="page-link bg-success border-success"
-                            href="#"
-                        >
-                            1
-                        </a>
-
-                    </li>
-
-
-                    <li class="page-item">
-
-                        <a
-                            class="page-link"
-                            href="#"
-                        >
-                            2
-                        </a>
-
-                    </li>
-
-
-                    <li class="page-item">
-
-                        <a
-                            class="page-link"
-                            href="#"
-                        >
-                            3
-                        </a>
-
-                    </li>
-
-
-                    <li class="page-item">
-
-                        <a
-                            class="page-link"
-                            href="#"
-                        >
-                            Selanjutnya
-                        </a>
-
-                    </li>
-
-                </ul>
-
-            </nav>
-
+            {{ $materi->links() }}
         </div>
+        @endif
 
     </div>
-
 </section>
 
 @endsection

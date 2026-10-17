@@ -1,326 +1,101 @@
 @extends('layouts.public.app')
 
-@section('title', 'Detail Materi | KSPM STMIK Adhi Guna')
-
+@section('title', $item->judul . ' | Materi Investasi KSPM')
 
 @section('content')
 
-{{-- HEADER --}}
-
+{{-- HEADER ARTIKEL --}}
 <section class="bg-success text-white">
-
     <div class="container py-5">
+        <a href="{{ route('materi.index') }}" class="text-white text-decoration-none small">
+            <i class="bi bi-arrow-left me-1"></i>
+            Kembali ke Materi Investasi
+        </a>
 
-        <div class="row">
+        <div class="mt-4">
+            <span class="badge bg-warning text-dark mb-3">
+                {{ $item->kategori ?: 'Materi Investasi' }}
+            </span>
 
-            <div class="col-lg-9">
+            <h1 class="display-5 fw-bold mb-3">
+                {{ $item->judul }}
+            </h1>
 
-                <span class="badge bg-warning text-dark mb-3">
+            @if($item->deskripsi)
+            <p class="lead text-white-50 mb-3">
+                {{ $item->deskripsi }}
+            </p>
+            @endif
 
-                    Dasar Investasi
+            <div class="small text-white-50">
+                <i class="bi bi-calendar3 me-1"></i>
+                {{ $item->created_at?->format('d F Y') }}
 
-                </span>
+                <span class="mx-2">•</span>
 
-
-                <h1 class="display-5 fw-bold mb-3">
-
-                    Pengenalan Investasi
-
-                </h1>
-
-
-                <p class="text-white-50 mb-0">
-
-                    Materi pembelajaran dasar mengenai
-                    investasi untuk pemula.
-
-                </p>
-
+                <i class="bi bi-journal-text me-1"></i>
+                Artikel edukasi
             </div>
-
         </div>
-
     </div>
-
 </section>
 
-
-
-{{-- DETAIL --}}
-
-<section class="py-5">
-
+{{-- ISI ARTIKEL --}}
+<section class="py-5 bg-light">
     <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
 
-        <div class="row g-5">
+                <article class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
 
+                        {{-- GAMBAR SAMPUL --}}
+                        @if($item->gambar)
+                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}"
+                            class="img-fluid rounded w-100 mb-5" style="max-height: 430px; object-fit: cover;">
+                        @endif
 
-            {{-- MAIN CONTENT --}}
+                        {{-- DESKRIPSI --}}
+                        @if($item->deskripsi)
+                        <div class="mb-4">
+                            <h5 class="fw-bold text-success mb-3">
+                                Tentang Materi
+                            </h5>
 
-            <div class="col-lg-8">
+                            <p class="text-secondary" style="line-height: 1.9; white-space: pre-line;">
+                                {{ $item->deskripsi }}</p>
+                        </div>
 
-                <div class="card border-0 shadow-sm">
+                        <hr class="my-4">
+                        @endif
 
-                    <div class="card-body p-4 p-lg-5">
-
-
-                        <div class="text-center mb-5">
-
+                        {{-- KONTEN ARTIKEL --}}
+                        <div class="materi-content">
+                            @if($item->isi)
                             <div
-                                class="bg-success bg-opacity-10 rounded-4 p-5"
-                            >
-
-                                <i
-                                    class="bi bi-book text-success"
-                                    style="font-size: 100px;"
-                                ></i>
-
+                                style="white-space: pre-wrap; overflow-wrap: anywhere; line-height: 2; color: #343a40;">
+                                {{ $item->isi }}</div>
+                            @else
+                            <div class="alert alert-info">
+                                Isi artikel ini belum tersedia.
                             </div>
-
+                            @endif
                         </div>
 
-
-                        <h3 class="fw-bold mb-4">
-                            Tentang Materi
-                        </h3>
-
-
-                        <p class="text-secondary">
-
-                            Materi ini memberikan pemahaman dasar
-                            mengenai investasi dan hal-hal yang perlu
-                            diperhatikan sebelum seseorang memulai
-                            aktivitas investasi.
-
-                        </p>
-
-
-                        <h4 class="fw-bold mt-5 mb-3">
-                            Materi yang Dipelajari
-                        </h4>
-
-
-                        <ul class="list-group list-group-flush mb-4">
-
-                            <li class="list-group-item px-0">
-
-                                <i
-                                    class="bi bi-check-circle-fill text-success me-2"
-                                ></i>
-
-                                Pengertian investasi
-
-                            </li>
-
-
-                            <li class="list-group-item px-0">
-
-                                <i
-                                    class="bi bi-check-circle-fill text-success me-2"
-                                ></i>
-
-                                Tujuan investasi
-
-                            </li>
-
-
-                            <li class="list-group-item px-0">
-
-                                <i
-                                    class="bi bi-check-circle-fill text-success me-2"
-                                ></i>
-
-                                Manfaat investasi
-
-                            </li>
-
-
-                            <li class="list-group-item px-0">
-
-                                <i
-                                    class="bi bi-check-circle-fill text-success me-2"
-                                ></i>
-
-                                Risiko investasi
-
-                            </li>
-
-
-                            <li class="list-group-item px-0">
-
-                                <i
-                                    class="bi bi-check-circle-fill text-success me-2"
-                                ></i>
-
-                                Jenis-jenis instrumen investasi
-
-                            </li>
-
-                        </ul>
-
-
-                        <h4 class="fw-bold mt-5 mb-3">
-                            Deskripsi
-                        </h4>
-
-
-                        <p class="text-secondary">
-
-                            Investasi merupakan aktivitas menempatkan
-                            sejumlah dana atau aset pada instrumen tertentu
-                            dengan tujuan memperoleh manfaat atau hasil
-                            pada masa yang akan datang.
-
-                        </p>
-
-
-                        <p class="text-secondary">
-
-                            Sebelum melakukan investasi, investor perlu
-                            memahami tujuan investasi, karakteristik
-                            instrumen, tingkat risiko, dan jangka waktu
-                            investasi.
-
-                        </p>
-
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            {{-- SIDEBAR --}}
-
-            <div class="col-lg-4">
-
-
-                {{-- INFO MATERI --}}
-
-                <div class="card border-0 shadow-sm mb-4">
-
-                    <div class="card-body p-4">
-
-                        <h5 class="fw-bold mb-4">
-                            Informasi Materi
-                        </h5>
-
-
-                        <div class="d-flex mb-3">
-
-                            <i
-                                class="bi bi-folder2-open text-success me-3"
-                            ></i>
-
-                            <div>
-
-                                <small class="text-secondary">
-                                    Kategori
-                                </small>
-
-                                <div class="fw-semibold">
-                                    Dasar Investasi
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="d-flex mb-3">
-
-                            <i
-                                class="bi bi-file-earmark-pdf text-danger me-3"
-                            ></i>
-
-                            <div>
-
-                                <small class="text-secondary">
-                                    Format
-                                </small>
-
-                                <div class="fw-semibold">
-                                    PDF
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="d-flex mb-4">
-
-                            <i
-                                class="bi bi-calendar3 text-success me-3"
-                            ></i>
-
-                            <div>
-
-                                <small class="text-secondary">
-                                    Dipublikasikan
-                                </small>
-
-                                <div class="fw-semibold">
-                                    22 September 2026
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        {{-- BUTTON DOWNLOAD --}}
-
-                        <a
-                            href="#"
-                            class="btn btn-success w-100 mb-2"
-                        >
-
-                            <i class="bi bi-download me-2"></i>
-
-                            Download Materi
-
-                        </a>
-
-
-                        <a
-                            href="#"
-                            class="btn btn-outline-success w-100"
-                        >
-
-                            <i class="bi bi-eye me-2"></i>
-
-                            Lihat Materi
-
+                        {{-- KEMBALI --}}
+                        <hr class="my-5">
+
+                        <a href="{{ route('materi.index') }}" class="btn btn-outline-success">
+                            <i class="bi bi-arrow-left me-2"></i>
+                            Kembali ke Daftar Materi
                         </a>
 
                     </div>
-
-                </div>
-
-
-
-                {{-- KEMBALI --}}
-
-                <a
-                    href="{{ url('/materi') }}"
-                    class="btn btn-outline-secondary w-100"
-                >
-
-                    <i class="bi bi-arrow-left me-2"></i>
-
-                    Kembali ke Materi
-
-                </a>
+                </article>
 
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 @endsection

@@ -16,8 +16,8 @@ class Materi extends Model
         'slug',
         'kategori',
         'deskripsi',
+        'isi',
         'gambar',
-        'file_materi',
         'status',
     ];
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Public\KegiatanController as PublicKegiatanController;
 use App\Http\Controllers\Public\BeritaArtikelController as PublicBeritaArtikelController;
 use App\Http\Controllers\Public\GaleriController as PublicGaleriController;
+use App\Http\Controllers\Public\MateriController as PublicMateriController;
 /*
 |--------------------------------------------------------------------------
 | PUBLIC WEBSITE
@@ -45,15 +46,15 @@ Route::prefix('berita')->name('berita.')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('materi')->name('materi.')->group(function () {
-    Route::get('/', function () {
-        return view('public.materi.index');
-    })->name('index');
 
-    Route::get('/{slug}', function (string $slug) {
-        return view('public.materi.show', compact('slug'));
-    })->name('show');
+Route::prefix('materi')->name('materi.')->group(function () {
+    Route::get('/', [PublicMateriController::class, 'index'])
+        ->name('index');
+
+    Route::get('/{slug}', [PublicMateriController::class, 'show'])
+        ->name('show');
 });
+
 
 /*
 |--------------------------------------------------------------------------
