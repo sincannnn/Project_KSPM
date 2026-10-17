@@ -26,7 +26,8 @@
             <span>Berita & Artikel</span>
         </a>
 
-        <a href="#" class="nav-link">
+        <a href="{{ route('admin.materi.index') }}"
+            class="nav-link {{ request()->routeIs('admin.materi.*') ? 'active' : '' }}">
             <i class="bi bi-book"></i>
             <span>Materi Edukasi</span>
         </a>

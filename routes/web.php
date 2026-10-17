@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BeritaArtikelController;
+use App\Http\Controllers\Admin\MateriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,17 +108,18 @@ Route::prefix('admin')
     ->middleware('admin')
     ->group(function () {
 
-        // Dashboard
-        Route::get('/dashboard', [DashboardController::class, 'index'])
-            ->name('dashboard');
+        Route::get('/dashboard', [
+            DashboardController::class,
+            'index',
+        ])->name('dashboard');
 
-        // CRUD Berita & Artikel
         Route::resource('berita-artikel', BeritaArtikelController::class)
             ->parameters([
                 'berita-artikel' => 'beritaArtikel',
             ]);
-    });
 
+        Route::resource('materi', MateriController::class);
+    });
 /*
 |--------------------------------------------------------------------------
 | AUTHENTICATION
