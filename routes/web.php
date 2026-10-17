@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\GaleriController;
 
 use App\Http\Controllers\Public\KegiatanController as PublicKegiatanController;
 use App\Http\Controllers\Public\BeritaArtikelController as PublicBeritaArtikelController;
+use App\Http\Controllers\Public\GaleriController as PublicGaleriController;
 /*
 |--------------------------------------------------------------------------
 | PUBLIC WEBSITE
@@ -73,6 +74,7 @@ Route::prefix('kegiatan')->name('kegiatan.')->group(function () {
 });
 
 
+
 /*
 |--------------------------------------------------------------------------
 | GALERI PUBLIK
@@ -80,14 +82,13 @@ Route::prefix('kegiatan')->name('kegiatan.')->group(function () {
 */
 
 Route::prefix('galeri')->name('galeri.')->group(function () {
-    Route::get('/', function () {
-        return view('public.galeri.index');
-    })->name('index');
+    Route::get('/', [PublicGaleriController::class, 'index'])
+        ->name('index');
 
-    Route::get('/{slug}', function (string $slug) {
-        return view('public.galeri.show', compact('slug'));
-    })->name('show');
+    Route::get('/{slug}', [PublicGaleriController::class, 'show'])
+        ->name('show');
 });
+
 
 /*
 |--------------------------------------------------------------------------
