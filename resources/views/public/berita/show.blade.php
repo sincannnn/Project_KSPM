@@ -1,148 +1,66 @@
 @extends('layouts.public.app')
 
-@section('title', 'Detail Berita | KSPM STMIK Adhi Guna')
-
+@section('title', $berita->judul . ' | KSPM STMIK Adhi Guna')
 
 @section('content')
 
-<section class="bg-success text-white">
+<section class="py-5 text-white" style="background: linear-gradient(135deg, #0f3d2e, #176044);">
+    <div class="container">
+        <span class="badge bg-warning text-dark mb-3 px-3 py-2">
+            <i class="bi bi-newspaper me-1"></i>
+            Berita & Artikel KSPM
+        </span>
 
-    <div class="container py-5">
+        <h1 class="fw-bold display-5 mb-3">
+            {{ $berita->judul }}
+        </h1>
 
-        <div class="row justify-content-center">
-
-            <div class="col-lg-9">
-
-                <span class="badge bg-warning text-dark mb-3">
-                    Berita
-                </span>
-
-                <h1 class="display-5 fw-bold mb-3">
-                    Mengenal Pasar Modal Indonesia
-                </h1>
-
-                <p class="text-white-50 mb-0">
-
-                    <i class="bi bi-calendar3 me-1"></i>
-
-                    22 September 2026
-
-                </p>
-
-            </div>
-
-        </div>
-
+        @if($berita->published_at)
+        <p class="mb-0 opacity-75">
+            <i class="bi bi-calendar3 me-1"></i>
+            {{ $berita->published_at->locale('id')->translatedFormat('d F Y') }}
+        </p>
+        @endif
     </div>
-
 </section>
 
-
-<section class="py-5">
-
+<section class="py-5 bg-light">
     <div class="container">
-
         <div class="row justify-content-center">
-
             <div class="col-lg-9">
 
-                {{-- GAMBAR --}}
+                <article class="card border-0 shadow-sm rounded-4 overflow-hidden">
 
-                <div
-                    class="bg-success bg-opacity-10 rounded-4 d-flex align-items-center justify-content-center mb-4"
-                    style="height: 350px;"
-                >
+                    @if($berita->gambar)
+                    <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}" class="w-100"
+                        style="max-height:480px; object-fit:cover;">
+                    @endif
 
-                    <i
-                        class="bi bi-newspaper text-success"
-                        style="font-size: 120px;"
-                    ></i>
+                    <div class="card-body p-4 p-lg-5">
 
-                </div>
+                        @if($berita->ringkasan)
+                        <p class="lead text-secondary mb-4">
+                            {{ $berita->ringkasan }}
+                        </p>
+                        @endif
 
+                        <div class="text-dark" style="line-height:1.9; overflow-wrap:anywhere;">
+                            {!! nl2br(e($berita->isi)) !!}
+                        </div>
 
-                {{-- ISI --}}
-
-                <article>
-
-                    <p class="lead">
-
-                        Pasar modal merupakan salah satu bagian
-                        penting dalam sistem keuangan yang mempertemukan
-                        pihak yang membutuhkan dana dengan pihak yang
-                        memiliki dana.
-
-                    </p>
-
-
-                    <p>
-
-                        Melalui pasar modal, masyarakat dapat
-                        berinvestasi pada berbagai instrumen seperti
-                        saham, obligasi, dan reksa dana.
-
-                    </p>
-
-
-                    <h3 class="fw-bold mt-5 mb-3">
-                        Apa Itu Pasar Modal?
-                    </h3>
-
-
-                    <p>
-
-                        Pasar modal adalah tempat berlangsungnya
-                        kegiatan yang berkaitan dengan penawaran umum
-                        dan perdagangan efek.
-
-                    </p>
-
-
-                    <p>
-
-                        Pemahaman mengenai pasar modal menjadi penting
-                        bagi mahasiswa yang ingin mulai mengenal dunia
-                        investasi.
-
-                    </p>
-
-
-                    <h3 class="fw-bold mt-5 mb-3">
-                        Pentingnya Edukasi Investasi
-                    </h3>
-
-
-                    <p>
-
-                        Edukasi investasi membantu masyarakat memahami
-                        risiko, tujuan, dan karakteristik setiap instrumen
-                        investasi sebelum mengambil keputusan.
-
-                    </p>
-
+                    </div>
                 </article>
 
-
-                <hr class="my-5">
-
-
-                <a
-                    href="{{ url('/berita') }}"
-                    class="btn btn-outline-success"
-                >
-
-                    <i class="bi bi-arrow-left me-2"></i>
-
-                    Kembali ke Berita
-
-                </a>
+                <div class="mt-4">
+                    <a href="{{ route('berita.index') }}" class="btn btn-outline-success">
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Kembali ke Berita
+                    </a>
+                </div>
 
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 @endsection

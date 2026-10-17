@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\GaleriController;
 
 
 use App\Http\Controllers\Public\KegiatanController as PublicKegiatanController;
+use App\Http\Controllers\Public\BeritaArtikelController as PublicBeritaArtikelController;
 /*
 |--------------------------------------------------------------------------
 | PUBLIC WEBSITE
@@ -21,6 +22,7 @@ Route::get('/', function () {
     return view('public.beranda.index');
 })->name('home');
 
+
 /*
 |--------------------------------------------------------------------------
 | BERITA & ARTIKEL PUBLIK
@@ -28,14 +30,13 @@ Route::get('/', function () {
 */
 
 Route::prefix('berita')->name('berita.')->group(function () {
-    Route::get('/', function () {
-        return view('public.berita.index');
-    })->name('index');
+    Route::get('/', [PublicBeritaArtikelController::class, 'index'])
+        ->name('index');
 
-    Route::get('/{slug}', function (string $slug) {
-        return view('public.berita.show', compact('slug'));
-    })->name('show');
+    Route::get('/{slug}', [PublicBeritaArtikelController::class, 'show'])
+        ->name('show');
 });
+
 
 /*
 |--------------------------------------------------------------------------
