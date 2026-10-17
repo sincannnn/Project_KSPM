@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -82,8 +84,8 @@ Route::get('/chatbot', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware('admin')->name('dashboard');
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+    ->middleware('admin')
+    ->name('dashboard');
 
 require __DIR__.'/auth.php';

@@ -1,40 +1,35 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.admin.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@section('title', 'Dashboard')
+@section('page-heading', 'Dashboard Admin')
 
-    <title>Dashboard Admin KSPM</title>
+@section('content')
 
+<div class="mb-4">
+    <h1 class="admin-page-title mb-1">Dashboard Admin</h1>
 
-</head>
+    <p class="admin-muted mb-0">
+        Selamat datang, {{ auth()->user()->name }}.
+        Kelola konten dan aktivitas Galeri Investasi dari sini.
+    </p>
+</div>
 
-<body>
+<div class="admin-card p-4">
+    <div class="d-flex align-items-start gap-3">
+        <div class="rounded-3 d-flex align-items-center justify-content-center"
+            style="width: 48px; height: 48px; background: #e5f2e9; color: #176044;">
+            <i class="bi bi-check-circle fs-4"></i>
+        </div>
 
-    <div style="padding: 40px;">
+        <div>
+            <h5 class="fw-semibold mb-1">Layout Admin Berhasil Dimuat</h5>
 
-        <h1>Dashboard Admin KSPM</h1>
-
-        <p>
-            Selamat datang,
-            <strong>{{ Auth::user()->name }}</strong>
-        </p>
-
-        <p>
-            Anda berhasil login sebagai Admin KSPM.
-        </p>
-
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-
-            <button type="submit">
-                Logout
-            </button>
-        </form>
-
+            <p class="admin-muted mb-0">
+                Sidebar, navbar, dan footer sudah terhubung.
+                Berikutnya kita akan membuat kartu statistik dan aktivitas terbaru.
+            </p>
+        </div>
     </div>
+</div>
 
-</body>
-
-</html>
+@endsection
